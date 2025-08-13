@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Details</title>
+</head>
+<body>
+    <h1>Add Student</h1>
+    <input type="text" id="name" placeholder="Enter Name">
+    <input type="number" id="id" placeholder="Enter ID">
+    <button onclick="addDetails()">Add</button>
+
+    <script>
+        function addDetails() {
+            const name = document.getElementById('name').value;
+            const id = document.getElementById('id').value;
+
+            if (name && id) {
+                fetch('http://localhost:3000/addDetails', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, uid: id })
+                })
+                .then(res => res.json())
+                .then(data => alert(data.message))
+                .catch(err => console.error(err));
+            } else {
+                alert("Fill both fields");
+            }
+        }
+    </script>
+</body>
+</html>

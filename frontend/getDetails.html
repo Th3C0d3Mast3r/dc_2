@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FETCHING THE DETAILS</title>
+</head>
+<body>
+    <div class="inputBox">
+        <input type="num ber" id="id" placeholder="Enter ID">
+        button onclick="fetchDetails()">Fetch Details</button>
+    </div>
+</body>
+<script>
+    function fetchDetails() {
+        const id = document.getElementById('id').value;
+        if (id) {
+            fetch(`https://api.example.com/details/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // You can display the data in the UI as needed
+                })
+                .catch(error => console.error('Error fetching details:', error));
+        } else {
+            alert('Please enter a valid ID');
+        }
+    }
+</script>
+</html>

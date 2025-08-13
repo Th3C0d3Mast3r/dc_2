@@ -12,18 +12,23 @@
 
     <script>
         function addDetails() {
-            const name = document.getElementById('name').value;
-            const id = document.getElementById('id').value;
+            const name = document.getElementById('name').value.trim();
+            const id = document.getElementById('id').value.trim();
 
             if (name && id) {
                 fetch('http://localhost:3000/addDetails', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, uid: id })
+                    body: JSON.stringify({ name, uid: Number(id) })
                 })
-                .then(res => res.json())
-                .then(data => alert(data.message))
-                .catch(err => console.error(err));
+                .then(res => {
+                    if (!res.ok) throw new Error("Error saving student");
+                    return res.json();
+                })
+                .then(data => {
+                    alert(`Student added: ${data.name} (ID: ${data.uid})`);
+                })
+                .catch(err => alert(err.message));
             } else {
                 alert("Fill both fields");
             }

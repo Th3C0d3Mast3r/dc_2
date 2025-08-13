@@ -11,18 +11,17 @@
 
     <script>
         function fetchDetails() {
-            const id = document.getElementById('id').value;
+            const id = document.getElementById('id').value.trim();
             if (id) {
-                fetch(`http://localhost:3000/getDetails/${id}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data) {
-                            alert(`Name: ${data.name}, ID: ${data.uid}`);
-                        } else {
-                            alert("No student found!");
-                        }
+                fetch(`http://localhost:3000/getDetails?id=${id}`)
+                    .then(res => {
+                        if (!res.ok) throw new Error("Student not found");
+                        return res.json();
                     })
-                    .catch(err => console.error(err));
+                    .then(data => {
+                        alert(`Name: ${data.name}, ID: ${data.uid}`);
+                    })
+                    .catch(err => alert(err.message));
             } else {
                 alert("Enter an ID");
             }
